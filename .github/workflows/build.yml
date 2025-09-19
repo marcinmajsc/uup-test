@@ -11,8 +11,8 @@ jobs:
       matrix:
         include:
           - name: windows-11
-          - name: server-2022
-          - name: server-2025
+          #- name: server-2022
+          #- name: server-2025
     runs-on: windows-2022
     steps:
       - name: Checkout
