@@ -2,17 +2,15 @@ name: build
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 10 * * Mon' # every monday at 10:00.
 
 jobs:
   build:
     strategy:
       matrix:
         include:
-          - name: windows-11
+          #- name: windows-11
           #- name: server-2022
-          #- name: server-2025
+          - name: server-2025
     runs-on: windows-2022
     steps:
       - name: Checkout
