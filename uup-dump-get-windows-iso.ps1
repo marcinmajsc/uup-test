@@ -122,15 +122,15 @@ function Get-UupDumpIso($name, $target) {
                 info = $result.response.updateInfo
             }
             $langs = $_.Value.langs.PSObject.Properties.Name
-            $editions = if ($langs -contains 'de-de') {
+            $editions = if ($langs -contains 'en-us') {
                 Write-Host "Getting the $name $id editions metadata"
                 $result = Invoke-UupDumpApi listeditions @{
                     id = $id
-                    lang = 'de-de'
+                    lang = 'en-us'
                 }
                 $result.response.editionFancyNames
             } else {
-                Write-Host "Skipping. Expected langs=de-de. Got langs=$($langs -join ',')."
+                Write-Host "Skipping. Expected langs=en-us. Got langs=$($langs -join ',')."
                 [PSCustomObject]@{}
             }
             $_.Value | Add-Member -NotePropertyMembers @{
@@ -156,8 +156,8 @@ function Get-UupDumpIso($name, $target) {
                 Write-Host "Skipping. Expected ring=$expectedRing. Got ring=$ring."
                 $result = $false
             }
-            if ($langs -notcontains 'de-de') {
-                Write-Host "Skipping. Expected langs=de-de. Got langs=$($langs -join ',')."
+            if ($langs -notcontains 'en-us') {
+                Write-Host "Skipping. Expected langs=en-us. Got langs=$($langs -join ',')."
                 $result = $false
             }
             if ($editions -notcontains $target.edition) {
@@ -178,13 +178,13 @@ function Get-UupDumpIso($name, $target) {
                 virtualEdition = $target.virtualEdition
                 apiUrl = 'https://api.uupdump.net/get.php?' + (New-QueryString @{
                     id = $id
-                    lang = 'de-de'
+                    lang = 'en-us'
                     edition = $target.edition
                     #noLinks = '1' # do not return the files download urls.
                 })
                 downloadUrl = 'https://uupdump.net/download.php?' + (New-QueryString @{
                     id = $id
-                    pack = 'de-de'
+                    pack = 'en-us'
                     edition = $target.edition
                 })
                 # NB you must use the HTTP POST method to invoke this packageUrl
@@ -194,7 +194,7 @@ function Get-UupDumpIso($name, $target) {
                 #           autodl=3 updates=1 cleanup=1 virtualEditions[]=Enterprise
                 downloadPackageUrl = 'https://uupdump.net/get.php?' + (New-QueryString @{
                     id = $id
-                    pack = 'de-de'
+                    pack = 'en-us'
                     edition = $target.edition
                 })
             }
